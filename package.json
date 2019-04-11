@@ -19,6 +19,9 @@
     "joi": "^14.3.1",
     "joi-objectid": "^2.0.0",
     "ora": "^3.4.0",
+    "swagger-jsdoc": "^3.2.8",
+    "swagger-stats": "^0.95.7",
+    "swagger-ui-express": "^4.0.2",
     "winston": "^3.2.1"
   },
   "devDependencies": {
