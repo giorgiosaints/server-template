@@ -1,34 +1,34 @@
 {
-    "server": {
-        "url": "localhost:",
-        "port": 3000
-    },
-    "db": {
-        "url": "mongodb://serginho:oh123456@ds055626.mlab.com:55626/server_template"
-    },
-    "security": {
-        "jwtPrivateKey": "secr3t",
-        "saltRounds": 10,
-        "enableHTTPS": true,
-        "key": "/security/keys/key.pem",
-        "certificate": "/security/keys/cert.pem",
-        "tokenLife": 3600
-    },
-    "swagger": {
-        "enabled": true,
-        "route": "/api-docs"
-    },
-    "log": {
-        "enabled": true,
-        "name": "",
-        "level": ""
-    },
-    "databaseOptions": {
-        "reconnectTries": 100000,
-        "reconnectInterval": 500,
-        "poolSize": 10,
-        "bufferMaxEntries": 0,
-        "socketTimeoutMS": 0,
-        "keepAlive": true
-    }
+	"server": {
+		"url": "localhost:",
+		"port": 3000
+	},
+	"db": {
+		"url": "mongodb://serginho:qwerty123@ds055626.mlab.com:55626/server_template"
+	},
+	"security": {
+		"jwtPrivateKey": "secr3t",
+		"saltRounds": 10,
+		"enableHTTPS": true,
+		"key": "/security/keys/key.pem",
+		"certificate": "/security/keys/cert.pem",
+		"tokenLife": 3600
+	},
+	"swagger": {
+		"enabled": true,
+		"route": "/api-docs"
+	},
+	"log": {
+		"enabled": true,
+		"name": "",
+		"level": ""
+	},
+	"databaseOptions": {
+		"reconnectTries": 100000,
+		"reconnectInterval": 500,
+		"poolSize": 10,
+		"bufferMaxEntries": 0,
+		"socketTimeoutMS": 0,
+		"keepAlive": true
+	}
 }
