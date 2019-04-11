@@ -4,7 +4,9 @@
   "main": "src/server.js",
   "license": "MIT",
   "scripts": {
-    "dev": "cross-env NODE_CONFIG_DIR=src/config nodemon src/server.js"
+    "set-env": "cross-env NODE_CONFIG_DIR=src/config",
+    "start": "npm run set-env nodemon src/server.js",
+    "dev": "npm run set-env nodemon src/server.js"
   },
   "dependencies": {
     "body-parser": "^1.18.3",
