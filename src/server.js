@@ -7,7 +7,7 @@ const app = express()
 const spinner = ora('Startup server...')
 const MESSAGE = `Server is running on port ${config.get('server.url')}${config.get('server.port')}`
 
-require('./startup/startup')(app)
+require('./startup')(app)
 // require('./startup/db')()
 if (config.get('swagger.enabled')) require('./startup/swagger')(app)
 if (config.get('log.enabled')) require('./startup/logger')(app)
