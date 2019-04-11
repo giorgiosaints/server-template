@@ -1,9 +1,25 @@
 {
   "name": "server-template",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "src/server.js",
   "license": "MIT",
+  "scripts": {
+    "dev": "cross-env NODE_CONFIG_DIR=src/config nodemon src/server.js"
+  },
   "dependencies": {
-    "express": "^4.16.4"
+    "body-parser": "^1.18.3",
+    "config": "^3.1.0",
+    "cors": "^2.8.5",
+    "cross-env": "^5.2.0",
+    "express": "^4.16.4",
+    "express-async-errors": "^3.1.1",
+    "http-status-codes": "^1.3.2",
+    "joi": "^14.3.1",
+    "joi-objectid": "^2.0.0",
+    "ora": "^3.4.0",
+    "winston": "^3.2.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.11"
   }
 }
