@@ -1,10 +1,8 @@
-const HttpStatus = require('http-status-codes')
-// const winston = require('winston')
+const httpStatus = require('http-status-codes')
 
 module.exports = (err, req, res, next) => {
-    // TODO: Log the exception
-    // winston.error(err.message, err)
-		res
-			.status(HttpStatus.BAD_REQUEST)
-			.json({ error: { statusCode: err.statusCode, message: err.message } })
+	// TODO: Log the exception
+	res
+		.status(httpStatus.BAD_REQUEST)
+		.json({ error: { statusCode: err.statusCode, message: err.message } })
 }
