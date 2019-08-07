@@ -1,5 +1,5 @@
 # Ignore all modules
 node_modules
-yarn.lock
 logs
 .env
+yarn.lock
