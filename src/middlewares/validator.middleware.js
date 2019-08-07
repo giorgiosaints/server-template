@@ -7,7 +7,7 @@ let validators = {
 			default: userValidationSchema,
 			login: loginValidationSchema
 		}
-	}
+	},
 	// "Another": {
 	// 	scopes: {
 	// 		default: anotherValidationSchema
