@@ -4,7 +4,7 @@
 		"port": 3000
 	},
 	"db": {
-		"url": "mongodb://serginho:qwerty123@ds055626.mlab.com:55626/server_template"
+		"url": "mongodb://localhost:27017/server_template"
 	},
 	"security": {
 		"jwtPrivateKey": "secr3t",

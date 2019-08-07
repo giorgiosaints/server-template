@@ -26,7 +26,7 @@ const initRoutesOfDocumentation = (swaggerSpec, app) => {
  * da API
  * @param {Application} app express app
  */
-module.exports = app => {
+module.exports = function Swagger(app) {
 	// logger.info('Inicializando a documentação da API SWAGGER')
 	spinner.color = 'blue'
 	spinner.start('Inicializando a documentação da API SWAGGER')

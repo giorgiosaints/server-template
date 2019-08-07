@@ -1,11 +1,16 @@
 const _ = require('lodash')
 const HttpStatus = require('http-status-codes')
-const { User } = require('./users.model')
-const usersService = require('./users.service')
-// let tokenList = []
+// const errorHandler = require('../../tools/errorHandler.js')
+const UsersService = require('./users.service')
 
+const usersService = new UsersService()
+
+// let tokenList = []
 exports.signIn = async (req, res) => {
-  let user = await usersService.findByEmail(req.body.email)
+  let user = await usersService
+    .findByEmail(req.body.email)
+    .catch(error => new Error(error))
+
   if (!user) return res.status(HttpStatus.BAD_REQUEST).send({ message: 'Invalid email' })
 
   const valid_password = await user.passwordMatches(req.body.password)
@@ -21,39 +26,60 @@ exports.signIn = async (req, res) => {
   res.send(response)
 }
 
-exports.all = async (req, res) => {
+exports.findAll = async (req, res) => {
   const email = req.query.email ? req.query.email : null
-  const users = await usersService.getUsers(email)
+  const users = await usersService
+    .findAll(email)
+    .catch(error => new Error(error))
+
   res.json(users)
 }
 
-exports.show = async (req, res) => {
-  const user = await usersService.getUser(req.params.id)
+exports.findOne = async (req, res) => {
+  const user = await usersService
+    .findOne(req.params.id)
+    .catch(error => new Error(error))
+
   if (!user) return res.status(HttpStatus.NOT_FOUND).send({ message: 'Invalid user' })
 
   res.json(user)
 }
 
 exports.create = async (req, res) => {
-  let user = await usersService.findByEmail(req.body.email)
-  if (user) return res.status(HttpStatus.BAD_REQUEST).send({ message: 'User already registered.' })
+  let user = await usersService
+    .findByEmail(req.body.email)
+    .catch(error => new Error(error))
 
-  user = await usersService.createUser(req.body)
+  if (user) return res
+    .status(HttpStatus.BAD_REQUEST)
+    .send({ message: 'User already registered.' })
+
+  user = await usersService
+    .create(req.body)
+    .catch(error => new Error(error))
 
   res.status(HttpStatus.CREATED).json(_.pick(user, ['_id', 'full_name', 'email', 'role', 'company']))
 }
 
 exports.update = async (req, res) => {
-  let user = await usersService.findById(req.params.id)
+  let user = await usersService
+    .findById(req.params.id)
+    .catch(error => new Error(error))
+
   if (!user) return res.status(HttpStatus.NOT_FOUND).send({ message: 'Invalid user' })
 
-  user = await usersService.updateUser(req.params.id, req.body)
+  user = await usersService
+    .update(req.params.id, req.body)
+    .catch(error => new Error(error))
 
   res.json(_.pick(user, ['_id', 'full_name', 'email', 'role', 'company']))
 }
 
 exports.delete = async (req, res) => {
-  const user = await usersService.findById(req.params.id)
+  const user = await usersService
+    .findById(req.params.id)
+    .catch(error => new Error(error))
+
   if (!user) res.status(HttpStatus.BAD_REQUEST).send({ message: 'Invalid user' })
 
   await user.remove()

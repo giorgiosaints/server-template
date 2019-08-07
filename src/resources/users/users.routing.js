@@ -2,18 +2,17 @@ const express = require('express')
 const router = express.Router()
 
 const usersController = require('./users.controller')
-const { validateUser } = require('./users.model')
 
 const auth = require('../../middlewares/auth.middleware')
 const authz = require('../../middlewares/authz.middleware')
+const validator = require('../../middlewares/validator.middleware')
 const validateObjectId = require('../../middlewares/validateObjectId.middeware')
-const validateJoi = require('../../middlewares/validateJoi.middleware')
 
-router.post('/sign_in', validateJoi(validateUser), usersController.signIn)
-router.get('/', [auth, authz], usersController.all)
-router.get('/:id', [auth, authz, validateObjectId], usersController.show)
-router.post('/', [validateJoi(validateUser)], usersController.create)
-router.patch('/:id', [auth, authz, validateObjectId, validateJoi(validateUser)], usersController.update)
+router.post('/sign_in', validator("User", "login"), usersController.signIn)
+router.get('/', [auth, authz], usersController.findAll)
+router.get('/:id', [auth, authz, validateObjectId], usersController.findOne)
+router.post('/', [validator("User")], usersController.create)
+router.patch('/:id', [auth, authz, validateObjectId, validator("User")], usersController.update)
 router.delete('/:id', [auth, authz, validateObjectId], usersController.delete)
 
 module.exports = router
@@ -119,8 +118,6 @@ module.exports = router
  *   post:
  *     summary: Create a user
  *     description: Create a user to be logged in
- *     security:
- *       - Bearer: []
  *     tags:
  *       - Users
  *     produces:

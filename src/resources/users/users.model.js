@@ -51,19 +51,22 @@ const userSchema = new mongoose.Schema({
   }
 })
 
-const validateUser = (user) => {
-  const schema = Joi.object().keys({
-    full_name: Joi.string().min(5).max(255),
-    email: Joi.string().min(5).max(255).required()
-      .regex(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)
-      .error(() => "Invalid email format."),
-    password: Joi.string().min(4).max(1024).required(),
-    role: Joi.string().valid(['admin', 'user']),
-    // company: Joi.objectId()
-  })
+const userValidationSchema = Joi.object().keys({
+  full_name: Joi.string().min(5).max(255),
+  email: Joi.string().min(5).max(255).required()
+    .regex(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)
+    .error(() => "Invalid email format."),
+  password: Joi.string().min(4).max(1024).required(),
+  role: Joi.string().valid(['admin', 'user']),
+  // company: Joi.objectId()
+})
 
-  return Joi.validate(user, schema, { abortEarly: false })
-}
+const loginValidationSchema = Joi.object().keys({
+  email: Joi.string().min(5).max(255).required()
+    .regex(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)
+    .error(() => "Invalid email format."),
+  password: Joi.string().min(4).max(1024).required(),
+})
 
 const passwordEncrypt = async (obj, next) => {
   try {
@@ -128,4 +131,5 @@ const User = mongoose.model('User', userSchema)
 
 exports.User = User
 exports.userSchema = userSchema
-exports.validateUser = validateUser
+exports.userValidationSchema = userValidationSchema
+exports.loginValidationSchema = loginValidationSchema

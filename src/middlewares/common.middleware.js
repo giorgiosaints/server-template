@@ -1,10 +1,13 @@
 const express = require('express')
 const bodyParser = require('body-parser')
+const morgan = require('morgan')
 const cors = require('cors')
-// const fileUpload = require('express-fileupload')
-const errorHandler = require('../middlewares/errorHandler.middleware')
+const helmet = require('helmet')
+const config = require('config')
+const logger = require('../tools/logger.config')
+const errorMiddleware = require('./error.middleware')
 
-module.exports = (app) => {
+module.exports = function CommonMiddleware(app) {
 	const corsOptions = {
 		origin: "*",
 		methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
@@ -17,12 +20,13 @@ module.exports = (app) => {
 	app.use(bodyParser.json({ limit: '50mb' }))
 	app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }))
 	app.use(bodyParser.json({ type: 'application/vnd.api+json' }))
+	if (config.get('log.enabled')) app.use(morgan('combined', { stream: logger.stream }))
 	app.use(cors(corsOptions))
-	// app.use(fileUpload())
+	app.use(helmet())
 
 	// API Routes
-	require('./routes')(app)
+	require('../startup/routes')(app)
 
 	// Middlewares functions
-	app.use(errorHandler)
+	app.use(errorMiddleware)
 }

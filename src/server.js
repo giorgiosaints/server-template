@@ -1,21 +1,23 @@
 const express = require('express')
+const dotenv = require('dotenv')
 const config = require('config')
 const ora = require('ora')
+const Middleware = require('./middlewares')
+const Swagger = require('./startup/swagger')
+const Database = require('./startup/database')
 require('express-async-errors')
 
+dotenv.config()
 const app = express()
 const spinner = ora('Startup server...')
 const MESSAGE = `Server is running on port ${config.get('server.url')}${config.get('server.port')}`
 
-require('./startup')(app)
-require('./startup/database')()
-if (config.get('swagger.enabled')) require('./startup/swagger')(app)
-if (config.get('log.enabled')) require('./startup/logger')(app)
-// if (config.get('company.enabled')) require('./startup/startup_user')()
+
+Middleware(app)
+Database()
+if (config.get('swagger.enabled')) Swagger(app)
 
 const server = app.listen(config.get('server.port'), () => {
-	// spinner.color = 'green'
-	// spinner.text = MESSAGE
 	spinner.start(MESSAGE)
 })
 

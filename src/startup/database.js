@@ -2,26 +2,9 @@ const mongoose = require('mongoose')
 const logger = require('../tools/logger.config')
 const config = require('config')
 
-/**
- * Tenta reestabelecer a conexão do banco de dados
- * @param {String} url url da conexão do banco de dados
- */
-const tryReconect = (url) => {
-  setTimeout(
-    () => {
-      mongoose.connect(
-        url,
-        config.get('database_options'),
-      )
-    },
-    5000, // tenta reconectar a cada 5 segundos
-  )
-}
-
-module.exports = () => {
+module.exports = function Database() {
   // DB Connection
-  // mongoose.connect(environment.db.url, { useNewUrlParser: true })
-  mongoose.connect(config.get('db.url'), { useNewUrlParser: true })
+  mongoose.connect(config.get('db.url'), { useNewUrlParser: true, poolSize: 5 })
     .then(() => logger.info('Connected to MongoDB'))
 
 
@@ -56,4 +39,20 @@ module.exports = () => {
     logger.info(`db: mongodb timeout ${e}`, 'DB')
     tryReconect(config.get('db.url'))
   })
+}
+
+/**
+ * Tenta reestabelecer a conexão do banco de dados
+ * @param {String} url url da conexão do banco de dados
+ */
+const tryReconect = (url) => {
+  setTimeout(
+    () => {
+      mongoose.connect(
+        url,
+        config.get('databaseOptions'),
+      )
+    },
+    5000, // tenta reconectar a cada 5 segundos
+  )
 }
