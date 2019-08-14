@@ -1,4 +1,5 @@
 const Joi = require('joi')
+const ValidatorError = require('../errors/validation.error');
 const { userValidationSchema, loginValidationSchema } = require('../resources/users/users.model')
 
 let validators = {
@@ -53,8 +54,7 @@ module.exports = function ValidatorMiddleware(model, scope) {
 	return (req, res, next) => {
 		const validationResult = validate(model, req.body, scope)
 		if (validationResult.error) {
-			const messages = validationResult.error.details.map(details => details.message)
-			return res.status(400).send(messages)
+			throw new ValidatorError(validationResult.error.message, model)
 		}
 		next()
 	}

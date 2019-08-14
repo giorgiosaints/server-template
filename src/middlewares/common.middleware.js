@@ -5,7 +5,6 @@ const cors = require('cors')
 const helmet = require('helmet')
 const config = require('config')
 const logger = require('../tools/logger.config')
-const errorMiddleware = require('./error.middleware')
 
 module.exports = function CommonMiddleware(app) {
 	const corsOptions = {
@@ -25,8 +24,8 @@ module.exports = function CommonMiddleware(app) {
 	app.use(helmet())
 
 	// API Routes
-	require('../startup/routes')(app)
+	// require('../startup/routes')(app)
 
 	// Middlewares functions
-	app.use(errorMiddleware)
+	// app.use(errorMiddleware)
 }

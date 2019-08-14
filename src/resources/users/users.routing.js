@@ -3,10 +3,10 @@ const router = express.Router()
 
 const usersController = require('./users.controller')
 
-const auth = require('../../middlewares/auth.middleware')
-const authz = require('../../middlewares/authz.middleware')
-const validator = require('../../middlewares/validator.middleware')
-const validateObjectId = require('../../middlewares/validateObjectId.middeware')
+const auth = require('../../security/auth.middleware')
+const authz = require('../../security/authz.middleware')
+const validator = require('../../validators/validator.middleware')
+const validateObjectId = require('../../validators/validateObjectId.middeware')
 
 router.post('/sign_in', validator("User", "login"), usersController.signIn)
 router.get('/', [auth, authz], usersController.findAll)

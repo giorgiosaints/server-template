@@ -2,7 +2,7 @@ const express = require('express')
 const dotenv = require('dotenv')
 const config = require('config')
 const ora = require('ora')
-const Middleware = require('./middlewares')
+const Middlewares = require('./middlewares')
 const Swagger = require('./startup/swagger')
 const Database = require('./startup/database')
 require('express-async-errors')
@@ -13,7 +13,7 @@ const spinner = ora('Startup server...')
 const MESSAGE = `Server is running on port ${config.get('server.url')}${config.get('server.port')}`
 
 
-Middleware(app)
+Middlewares(app)
 Database()
 if (config.get('swagger.enabled')) Swagger(app)
 
